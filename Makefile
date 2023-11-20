@@ -21,4 +21,10 @@ createdb:
 dropdb:
 	docker exec -it ${DB_DOCKER_CONTAINER} dropdb ${DB_NAME}
 
+migrateup:
+	migrate -path db/migration -database "$(DB_URL)" -verbose up
+
+migratedown:
+	migrate -path db/migration -database "$(DB_URL)" -verbose down
+
 
