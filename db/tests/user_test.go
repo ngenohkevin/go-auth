@@ -32,3 +32,7 @@ func createRandomUser(t *testing.T) db.User {
 
 	return user
 }
+
+func TestCreateUser(t *testing.T) {
+	createRandomUser(t)
+}
