@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	db "github.com/ngenohkevin/go-auth/db/sqlc"
 	"github.com/ngenohkevin/go-auth/utils"
 	"net/http"
@@ -28,6 +29,7 @@ func (server *Server) createUser(ctx *gin.Context) {
 		return
 	}
 	arg := db.CreateUserParams{
+		ID:             uuid.New(),
 		Username:       req.Username,
 		Email:          req.Email,
 		FullName:       req.FullName,
