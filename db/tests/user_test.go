@@ -2,6 +2,7 @@ package tests
 
 import (
 	"context"
+	"github.com/google/uuid"
 	db "github.com/ngenohkevin/go-auth/db/sqlc"
 	"github.com/ngenohkevin/go-auth/utils"
 	"github.com/stretchr/testify/require"
@@ -12,6 +13,7 @@ func createRandomUser(t *testing.T) db.User {
 	hashedPassword, err := utils.HashPassword(utils.RandomString(8))
 	require.NoError(t, err)
 	arg := db.CreateUserParams{
+		ID:             uuid.New(),
 		Username:       utils.RandomUser(),
 		Email:          utils.RandomEmail(),
 		FullName:       utils.RandomUser(),
@@ -35,4 +37,8 @@ func createRandomUser(t *testing.T) db.User {
 
 func TestCreateUser(t *testing.T) {
 	createRandomUser(t)
+}
+
+func TestGetUser(t *testing.T) {
+
 }
