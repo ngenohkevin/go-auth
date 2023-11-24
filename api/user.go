@@ -6,6 +6,7 @@ import (
 	db "github.com/ngenohkevin/go-auth/db/sqlc"
 	"github.com/ngenohkevin/go-auth/utils"
 	"net/http"
+	"time"
 )
 
 type createUserRequest struct {
@@ -13,6 +14,15 @@ type createUserRequest struct {
 	Password string `json:"password" binding:"required,min=6"`
 	FullName string `json:"full_name" binding:"required"`
 	Email    string `json:"email" binding:"required,email"`
+}
+
+type createUserResponse struct {
+	ID                uuid.UUID `json:"id"`
+	Username          string    `json:"username"`
+	FullName          string    `json:"full_name"`
+	Email             string    `json:"email"`
+	PasswordChangedAt time.Time `json:"password_changed_at"`
+	CreatedAt         time.Time `json:"created_at"`
 }
 
 func (server *Server) createUser(ctx *gin.Context) {
@@ -44,5 +54,14 @@ func (server *Server) createUser(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	ctx.JSON(http.StatusOK, user)
+	rsp := createUserResponse{
+		ID:                user.ID,
+		Username:          user.Username,
+		FullName:          user.FullName,
+		Email:             user.Email,
+		PasswordChangedAt: user.PasswordChangedAt,
+		CreatedAt:         user.CreatedAt,
+	}
+
+	ctx.JSON(http.StatusOK, rsp)
 }
