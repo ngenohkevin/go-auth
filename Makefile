@@ -1,14 +1,14 @@
 
-DB_URL=postgres://root:85dilanwest@localhost:5432/go-auth?sslmode=disable
+DB_URL=postgres://root:secret@localhost:5432/go-auth?sslmode=disable
 DB_NAME=go-auth
 USER=root
-PASSWORD=85dilanwest
+PASSWORD=secret
 HOST=localhost
 DB_PORT=5432
 NETWORK=go-auth-network
-DB_DOCKER_CONTAINER=go-auth-db
+DB_DOCKER_CONTAINER=go-auth-db  # docker container name postgres15-alpine
 APP_NAME=go-auth
-DB_SOURCE=postgres://root:85dilanwest@localhost:5432/go-auth?sslmode=disable
+DB_SOURCE=postgres://root:secret@localhost:5432/go-auth?sslmode=disable
 DB_DRIVER=postgres
 SERVER_ADDRESS=0.0.0.0:8080
 ACCESS_TOKEN_DURATION=15m
@@ -21,7 +21,7 @@ build:
 	docker build -t ${APP_NAME}:latest .
 
 run:
-	docker run ${APP_NAME}:latest
+	docker run ${APP_NAME}
 
 #run:
 #	docker run --name ${APP_NAME} --network ${NETWORK} -p 8080:8080 -e DB_HOST=${DB_HOST} -e DB_PORT=${DB_PORT} -e DB_NAME=${DB_NAME} -e DB_USER=${DB_USER} -e DB_PASSWORD=${DB_PASSWORD} -d ${APP_NAME}:latest
