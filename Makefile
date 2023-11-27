@@ -8,6 +8,11 @@ DB_PORT=5432
 NETWORK=go-auth-network
 DB_DOCKER_CONTAINER=go-auth-db
 APP_NAME=go-auth
+DB_SOURCE=postgres://root:85dilanwest@localhost:5432/go-auth?sslmode=disable
+DB_DRIVER=postgres
+SERVER_ADDRESS=0.0.0.0:8080
+ACCESS_TOKEN_DURATION=15m
+TOKEN_SYMMETRIC_KEY=38dd0acc8f9929fe9fe8e77cea918247
 
 network:
 	docker network create ${NETWORK}
@@ -31,7 +36,7 @@ dropdb:
 	docker exec -it ${DB_DOCKER_CONTAINER} dropdb ${DB_NAME}
 
 migrateup:
-	migrate -path db/migration -database "postgresql://root:85dilanwest@localhost:5432/go-auth?sslmode=disable" -verbose up
+	migrate -path db/migration -database "$(DB_URL)" -verbose up
 
 migratedown:
 	migrate -path db/migration -database "$(DB_URL)" -verbose down
