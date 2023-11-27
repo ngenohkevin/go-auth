@@ -1,4 +1,13 @@
-include app.env
+
+DB_URL=postgres://root:85dilanwest@localhost:5432/go-auth?sslmode=disable
+DB_NAME=go-auth
+USER=root
+PASSWORD=85dilanwest
+HOST=localhost
+DB_PORT=5432
+NETWORK=go-auth-network
+DB_DOCKER_CONTAINER=go-auth-db
+APP_NAME=go-auth
 
 network:
 	docker network create ${NETWORK}
