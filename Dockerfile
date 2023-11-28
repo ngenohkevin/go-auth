@@ -8,8 +8,9 @@ RUN go build -o main main.go
 FROM alpine:3.17
 WORKDIR /app
 COPY --from=builder /app/main .
-COPY app.env .
-COPY db/migration ./db/migration
+COPY --from=builder /app/app.env .
+COPY --from=builder /app/db/migration ./db/migration
+
 
 EXPOSE 8080
 CMD ["/app/main"]
