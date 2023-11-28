@@ -2,7 +2,7 @@
 FROM golang:1.20-alpine3.17 AS builder
 WORKDIR /app
 COPY . .
-RUN apk --no-cache add curl
+RUN apk add curl
 RUN go build -o main main.go
 RUN curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.2/migrate.linux-amd64.tar.gz | tar xvz
 
