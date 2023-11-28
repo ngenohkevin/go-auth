@@ -1,5 +1,3 @@
-include app.env
-
 DB_URL=postgres://root:secret@localhost:5432/go-auth?sslmode=disable
 DB_NAME=go-auth
 USER=root
