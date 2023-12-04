@@ -49,13 +49,13 @@ func (maker *JWTMaker) VerifyToken(token string) (*Payload, error) {
 
 	jwtToken, err := jwt.ParseWithClaims(token, &Payload{}, keyFunc)
 	if err != nil {
-		if ve, ok := err.(*jwt.ValidationError); ok {
-			if ve.Errors == jwt.ValidationErrorExpired {
-				fmt.Println("Token has expired")
-				return nil, ErrExpiredTokens
-			}
-		}
-		fmt.Println("Token verification error:", err)
+		//if ve, ok := err.(*jwt.ValidationError); ok {
+		//	if ve.Errors == jwt.ValidationErrorExpired {
+		//		fmt.Println("Token has expired")
+		//		return nil, ErrExpiredTokens
+		//	}
+		//}
+		//fmt.Println("Token verification error:", err)
 		return nil, ErrInvalidToken
 	}
 
