@@ -26,11 +26,23 @@ func NewPayload(username string, duration time.Duration) (*Payload, error) {
 	if err != nil {
 		return nil, err
 	}
+	issuedAt := time.Now()
+	expiresAt := issuedAt.Add(duration)
+
 	payload := &Payload{
 		ID:        tokenID,
 		Username:  username,
-		IssuedAt:  time.Now(),
-		ExpiresAt: time.Now().Add(duration),
+		IssuedAt:  issuedAt,
+		ExpiresAt: expiresAt,
+		RegisteredClaims: jwt.RegisteredClaims{
+			Issuer:    "",
+			Subject:   "",
+			Audience:  nil,
+			ExpiresAt: jwt.NewNumericDate(expiresAt),
+			NotBefore: nil,
+			IssuedAt:  jwt.NewNumericDate(issuedAt),
+			ID:        "",
+		},
 	}
 
 	return payload, nil
