@@ -23,6 +23,12 @@ func NewJWTMaker(secretKey string) (Maker, error) {
 
 // CreateToken creates a new token for a specific username and duration
 func (maker *JWTMaker) CreateToken(username string, duration time.Duration) (string, error) {
+
+	// Convert negative duration to positive
+	if duration < 0 {
+		duration = -duration
+	}
+
 	payload, err := NewPayload(username, duration)
 	if err != nil {
 		return "", err
@@ -43,11 +49,23 @@ func (maker *JWTMaker) VerifyToken(token string) (*Payload, error) {
 
 	jwtToken, err := jwt.ParseWithClaims(token, &Payload{}, keyFunc)
 	if err != nil {
+		if ve, ok := err.(*jwt.ValidationError); ok {
+			if ve.Errors == jwt.ValidationErrorExpired {
+				fmt.Println("Token has expired")
+				return nil, ErrExpiredTokens
+			}
+		}
+		fmt.Println("Token verification error:", err)
 		return nil, ErrInvalidToken
 	}
+
 	payload, ok := jwtToken.Claims.(*Payload)
 	if !ok {
 		return nil, ErrInvalidToken
 	}
+
+	fmt.Println("ExpiresAt:", payload.ExpiresAt)
+	fmt.Println("Current Time:", time.Now())
+
 	return payload, nil
 }
