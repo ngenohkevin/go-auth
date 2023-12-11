@@ -17,7 +17,6 @@ type Payload struct {
 	Username  string    `json:"username"`
 	IssuedAt  time.Time `json:"issued_at"`
 	ExpiresAt time.Time `json:"expires_at"`
-	//jwt.RegisteredClaims
 }
 
 func NewPayload(username string, duration time.Duration) (*Payload, error) {
@@ -33,15 +32,6 @@ func NewPayload(username string, duration time.Duration) (*Payload, error) {
 		Username:  username,
 		IssuedAt:  issuedAt,
 		ExpiresAt: expiresAt,
-		//RegisteredClaims: jwt.RegisteredClaims{
-		//	Issuer:    "",
-		//	Subject:   "",
-		//	Audience:  nil,
-		//	ExpiresAt: jwt.NewNumericDate(expiresAt),
-		//	NotBefore: nil,
-		//	IssuedAt:  jwt.NewNumericDate(issuedAt),
-		//	ID:        "",
-		//},
 	}
 
 	return payload, nil
