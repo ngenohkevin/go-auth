@@ -2,7 +2,6 @@ package token
 
 import (
 	"errors"
-	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"time"
 )
@@ -18,7 +17,7 @@ type Payload struct {
 	Username  string    `json:"username"`
 	IssuedAt  time.Time `json:"issued_at"`
 	ExpiresAt time.Time `json:"expires_at"`
-	jwt.RegisteredClaims
+	//jwt.RegisteredClaims
 }
 
 func NewPayload(username string, duration time.Duration) (*Payload, error) {
@@ -34,15 +33,15 @@ func NewPayload(username string, duration time.Duration) (*Payload, error) {
 		Username:  username,
 		IssuedAt:  issuedAt,
 		ExpiresAt: expiresAt,
-		RegisteredClaims: jwt.RegisteredClaims{
-			Issuer:    "",
-			Subject:   "",
-			Audience:  nil,
-			ExpiresAt: jwt.NewNumericDate(expiresAt),
-			NotBefore: nil,
-			IssuedAt:  jwt.NewNumericDate(issuedAt),
-			ID:        "",
-		},
+		//RegisteredClaims: jwt.RegisteredClaims{
+		//	Issuer:    "",
+		//	Subject:   "",
+		//	Audience:  nil,
+		//	ExpiresAt: jwt.NewNumericDate(expiresAt),
+		//	NotBefore: nil,
+		//	IssuedAt:  jwt.NewNumericDate(issuedAt),
+		//	ID:        "",
+		//},
 	}
 
 	return payload, nil
