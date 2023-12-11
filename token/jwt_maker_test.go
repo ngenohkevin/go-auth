@@ -1,7 +1,7 @@
 package token
 
 import (
-	"fmt"
+	"github.com/golang-jwt/jwt/v4"
 	"testing"
 	"time"
 
@@ -44,9 +44,27 @@ func TestExpiredJWTToken(t *testing.T) {
 	require.NotEmpty(t, token)
 
 	payload, err := maker.VerifyToken(token)
-	fmt.Printf("verify2 payload: %#v", payload)
 	require.Error(t, err)
 	require.EqualError(t, err, ErrExpiredTokens.Error())
+	require.Nil(t, payload)
+
+}
+
+func TestInvalidJWTTokenAlgNone(t *testing.T) {
+	payload, err := NewPayload(utils.RandomUser(), time.Minute)
+	require.NoError(t, err)
+	require.NotEmpty(t, payload)
+
+	jwtToken := jwt.NewWithClaims(jwt.SigningMethodNone, payload)
+	token, err := jwtToken.SignedString(jwt.UnsafeAllowNoneSignatureType)
+	require.NoError(t, err)
+
+	maker, err := NewJWTMaker(utils.RandomString(32))
+	require.NoError(t, err)
+
+	payload, err = maker.VerifyToken(token)
+	require.Error(t, err)
+	require.EqualError(t, err, ErrInvalidToken.Error())
 	require.Nil(t, payload)
 
 }
