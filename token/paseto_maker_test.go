@@ -33,6 +33,7 @@ func TestPasetoMaker(t *testing.T) {
 
 }
 
+// Test for validity of token
 func TestExpiredPasetoToken(t *testing.T) {
 	maker, err := NewPasetoMaker(utils.RandomString(32))
 	require.NoError(t, err)
