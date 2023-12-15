@@ -15,7 +15,8 @@ type Server struct {
 }
 
 func NewServer(config utils.Config, store *store.Store) (*Server, error) {
-	tokenMaker, err := token.NewPasetoMaker()
+	tokenMaker, err := token.NewPasetoMaker("")
+
 	server := &Server{
 		config: config,
 		store:  store,
