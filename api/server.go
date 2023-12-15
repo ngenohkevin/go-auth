@@ -21,8 +21,9 @@ func NewServer(config utils.Config, store *store.Store) (*Server, error) {
 		return nil, fmt.Errorf("cannot create token maker: %w", err)
 	}
 	server := &Server{
-		config: config,
-		store:  store,
+		config:     config,
+		store:      store,
+		tokenMaker: tokenMaker,
 	}
 	server.SetupRouter()
 	return server, nil
