@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/ngenohkevin/go-auth/db/store"
 	"github.com/ngenohkevin/go-auth/token"
@@ -16,7 +17,9 @@ type Server struct {
 
 func NewServer(config utils.Config, store *store.Store) (*Server, error) {
 	tokenMaker, err := token.NewPasetoMaker("")
-
+	if err != nil {
+		return nil, fmt.Errorf("cannot create token maker: %w", err)
+	}
 	server := &Server{
 		config: config,
 		store:  store,
